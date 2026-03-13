@@ -1,74 +1,410 @@
 <%- include('../partials/header') %>
 
-<div class="page-hero">
-  <span class="tag">The Founder</span>
-  <h1>Behind NEXORA</h1>
-  <p>A 16-year-old developer from Egypt with a big vision and the skills to back it up.</p>
-</div>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
 
-<section class="section" style="background:var(--surface)">
-  <div class="inner">
-    <div class="owner-layout">
-      <div class="profile-card reveal">
-        <div class="owner-av">👨‍💻</div>
-        <h2>Yassin</h2>
-        <div class="owner-role">Founder &amp; Lead Developer</div>
-        <div class="p-det"><span class="p-det-icon">📍</span><span class="p-det-val">Egypt</span></div>
-        <div class="p-det"><span class="p-det-icon">🎂</span><span class="p-det-val">16 years old</span></div>
-        <div class="p-det"><span class="p-det-icon">📚</span><span class="p-det-val">High School Student</span></div>
-        <div class="p-det"><span class="p-det-icon">💻</span><span class="p-det-val">Self-taught Developer</span></div>
-        <p class="owner-bio">I started coding out of curiosity and quickly fell in love with turning ideas into real websites. I founded NEXORA to make professional web design accessible to small businesses — without the agency price tag.</p>
-        <div class="vision">"My goal is to build Nexora into a strong digital brand and become one of the most creative tech entrepreneurs in the region."</div>
+/* ── TOKENS ──────────────────────────────────────────────── */
+.owner-page {
+  --ink:       #080d1a; --ink2:    #0f1d3a;
+  --sky:       #00d4ff; --sky2:    #00aacc;
+  --violet:    #7b5cf0; --violet2: #5c3fc0;
+  --surface:   #f4f6ff; --surface2:#eef0fc;
+  --card:      #ffffff;
+  --muted:     #64748b; --muted2:  #94a3b8;
+  --border:    rgba(123,92,240,.12);
+  --border2:   rgba(123,92,240,.22);
+  --r: 16px; --r2: 24px;
+  --sh:  0 4px 24px rgba(0,0,0,.06),0 1px 4px rgba(0,0,0,.04);
+  --shm: 0 8px 40px rgba(0,0,0,.10),0 2px 8px rgba(0,0,0,.05);
+  --shl: 0 20px 60px rgba(0,0,0,.14),0 4px 16px rgba(0,0,0,.06);
+  --glow-sky: 0 0 40px rgba(0,212,255,.25);
+  --glow-v:   0 0 40px rgba(123,92,240,.3);
+  --trans:     all .3s cubic-bezier(.4,0,.2,1);
+  --ease-out:  cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.owner-page *, .owner-page *::before, .owner-page *::after { box-sizing: border-box; }
+.owner-page h1,.owner-page h2,.owner-page h3,.owner-page h4,.owner-page h5 { font-family: 'Syne', sans-serif; }
+
+/* ── HERO ────────────────────────────────────────────────── */
+.ow-hero{
+  position:relative;background:var(--ink);
+  padding:8.5rem 2rem 7rem;text-align:center;overflow:hidden;
+}
+.ow-hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 0%,  rgba(123,92,240,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 100%,rgba(0,212,255,.14) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 70% at 90% 20%,  rgba(123,92,240,.08) 0%,transparent 50%);
+  pointer-events:none;
+}
+.ow-hero::after{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(123,92,240,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(123,92,240,.055) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
+  pointer-events:none;
+}
+.ow-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);}
+.ow-orb-1{width:480px;height:480px;top:-180px;left:-80px;  background:rgba(123,92,240,.13);animation:orb 12s ease-in-out infinite;}
+.ow-orb-2{width:380px;height:380px;bottom:-140px;right:-60px;background:rgba(0,212,255,.11);animation:orb 15s ease-in-out infinite reverse;}
+.ow-orb-3{width:280px;height:280px;top:35%;left:58%;        background:rgba(123,92,240,.07);animation:orb 10s ease-in-out infinite 3s;}
+@keyframes orb{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(28px,-18px) scale(1.07);}66%{transform:translate(-18px,14px) scale(.93);}}
+.ow-hero-content{position:relative;z-index:2;}
+.ow-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;padding:.35rem 1.1rem;
+  border:1px solid rgba(0,212,255,.3);border-radius:999px;
+  font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--sky);
+  background:rgba(0,212,255,.06);margin-bottom:1.75rem;
+  animation:fade-up .8s var(--ease-out) both;
+}
+.ow-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--sky);box-shadow:0 0 8px var(--sky);animation:pulse-dot 2s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.4);opacity:.6;}}
+.ow-hero h1{font-size:clamp(2.8rem,6.5vw,4.8rem);font-weight:800;letter-spacing:-.04em;line-height:.96;color:#fff;margin-bottom:1.25rem;animation:fade-up .9s .1s var(--ease-out) both;}
+.ow-hero h1 .grad{background:linear-gradient(135deg,var(--sky),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ow-hero p{font-size:1.05rem;color:rgba(255,255,255,.5);max-width:480px;margin:0 auto;line-height:1.8;animation:fade-up .9s .2s var(--ease-out) both;}
+@keyframes fade-up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────── */
+.ow-section{background:var(--surface);padding:5.5rem 2rem;}
+.ow-inner{max-width:1100px;margin:0 auto;}
+.ow-layout{display:grid;grid-template-columns:320px 1fr;gap:3rem;align-items:start;}
+
+/* ── PROFILE CARD (sticky) ───────────────────────────────── */
+.profile-card{
+  position:sticky;top:7rem;
+  background:var(--ink);border:1.5px solid rgba(123,92,240,.25);
+  border-radius:var(--r2);overflow:hidden;
+  box-shadow:var(--shl),var(--glow-v);
+}
+/* animated shimmer top */
+.profile-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--sky),var(--violet),var(--sky),transparent);
+  background-size:300% 100%;animation:shimmer-top 3s linear infinite;
+}
+@keyframes shimmer-top{0%{background-position:150% 0;}100%{background-position:-150% 0;}}
+
+.profile-inner{padding:2.5rem 2rem;position:relative;z-index:1;}
+
+.owner-av{
+  width:84px;height:84px;border-radius:50%;margin-bottom:1.25rem;
+  background:linear-gradient(135deg,var(--violet),var(--violet2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;
+  box-shadow:0 8px 32px rgba(123,92,240,.5),0 0 0 3px rgba(123,92,240,.15);
+  animation:avatar-glow 3s ease-in-out infinite;
+}
+@keyframes avatar-glow{
+  0%,100%{box-shadow:0 8px 32px rgba(123,92,240,.5),0 0 0 3px rgba(123,92,240,.15);}
+  50%{box-shadow:0 8px 48px rgba(0,212,255,.5),0 0 0 4px rgba(0,212,255,.2);}
+}
+.profile-name{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.04em;color:#fff;margin-bottom:.3rem;}
+.profile-role{
+  font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--sky),var(--violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1.5rem;
+}
+.p-div{height:1px;background:rgba(123,92,240,.2);margin:1.25rem 0;}
+.p-det{display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.p-det:last-of-type{border-bottom:none;}
+.p-det-icon{font-size:1rem;flex-shrink:0;}
+.p-det-val{font-size:.83rem;color:rgba(255,255,255,.58);}
+.owner-bio{font-size:.84rem;color:rgba(255,255,255,.42);line-height:1.8;margin:1.25rem 0;}
+.vision-quote{
+  padding:1rem 1.25rem;background:rgba(0,212,255,.06);
+  border-left:2px solid var(--sky);border-radius:0 var(--r) var(--r) 0;
+  font-size:.81rem;font-style:italic;color:rgba(255,255,255,.5);line-height:1.7;
+}
+
+/* ── RIGHT BLOCKS ────────────────────────────────────────── */
+.ow-right{display:flex;flex-direction:column;gap:1.5rem;}
+.ow-block{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r2);padding:2rem;box-shadow:var(--sh);
+  position:relative;overflow:hidden;transition:var(--trans);
+}
+.ow-block::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--violet),var(--sky));
+  transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-out);
+}
+.ow-block:hover::before{transform:scaleX(1);}
+.ow-block:hover{box-shadow:var(--shm);border-color:var(--border2);}
+.ow-block h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:1.5rem;letter-spacing:-.01em;}
+
+/* Skills grid */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;}
+.skill-chip{
+  padding:1rem;text-align:center;background:var(--surface);
+  border:1.5px solid var(--border);border-radius:var(--r);
+  transition:var(--trans);cursor:default;position:relative;overflow:hidden;
+}
+.skill-chip::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(123,92,240,.06),rgba(0,212,255,.04));
+  opacity:0;transition:opacity .3s;
+}
+.skill-chip:hover{border-color:var(--border2);box-shadow:var(--shm);transform:translateY(-4px);}
+.skill-chip:hover::after{opacity:1;}
+.chip-icon{font-size:1.4rem;margin-bottom:.4rem;}
+.chip-name{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:var(--ink);margin-bottom:.15rem;letter-spacing:-.01em;}
+.chip-desc{font-size:.68rem;color:var(--muted2);line-height:1.4;}
+
+/* Education timeline */
+.edu-timeline{display:flex;flex-direction:column;}
+.edu-item{display:flex;gap:1.1rem;padding:1rem 0;border-bottom:1px solid var(--border);position:relative;}
+.edu-item:last-child{border-bottom:none;}
+.edu-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:.25rem;}
+.edu-dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--violet),var(--sky));
+  box-shadow:0 0 10px rgba(123,92,240,.4);
+}
+.edu-line{width:1px;flex:1;margin-top:4px;background:linear-gradient(to bottom,rgba(123,92,240,.3),transparent);min-height:20px;}
+.edu-item:last-child .edu-line{display:none;}
+.edu-label{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--ink);display:block;margin-bottom:.25rem;letter-spacing:-.01em;}
+.edu-sub{font-size:.78rem;color:var(--muted);line-height:1.5;}
+
+/* ── CERTIFICATES ────────────────────────────────────────── */
+.certs-section{background:var(--ink);padding:5.5rem 2rem;position:relative;overflow:hidden;}
+.certs-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(123,92,240,.4),rgba(0,212,255,.4),rgba(123,92,240,.4),transparent);
+}
+.certs-section::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(123,92,240,.1) 0%,transparent 60%);
+  pointer-events:none;
+}
+.certs-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.cert-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;padding:.3rem 1rem;
+  border:1px solid rgba(0,212,255,.3);border-radius:999px;
+  font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--sky);
+  background:rgba(0,212,255,.06);margin-bottom:1rem;
+}
+.certs-head{margin-bottom:3rem;}
+.certs-head h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.04em;color:#fff;margin-bottom:.6rem;}
+.certs-head p{font-size:.92rem;color:rgba(255,255,255,.42);max-width:480px;line-height:1.75;}
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+
+.cert-card{
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(123,92,240,.18);
+  border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);
+  transition:var(--trans);position:relative;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.cert-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--violet),var(--sky));
+  transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-out);
+}
+.cert-card:hover::before{transform:scaleX(1);}
+.cert-card:hover{
+  background:rgba(255,255,255,.07);border-color:rgba(123,92,240,.35);
+  box-shadow:0 20px 60px rgba(0,0,0,.3),var(--glow-v);transform:translateY(-6px);
+}
+.cert-thumb{width:100%;aspect-ratio:16/9;overflow:hidden;background:rgba(255,255,255,.06);}
+.cert-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease-out);}
+.cert-card:hover .cert-thumb img{transform:scale(1.05);}
+.cert-body{padding:1.1rem 1.25rem;}
+.cert-issuer{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:.35rem;}
+.cert-body h4{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:rgba(255,255,255,.85);line-height:1.4;margin-bottom:.4rem;letter-spacing:-.01em;}
+.cert-year{
+  font-size:.72rem;color:rgba(255,255,255,.35);
+  padding:.18rem .65rem;background:rgba(255,255,255,.06);
+  border:1px solid rgba(123,92,240,.2);border-radius:999px;display:inline-block;
+}
+
+/* ── BOTTOM CTA ──────────────────────────────────────────── */
+.ow-cta{
+  background:var(--ink2);padding:7rem 2rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.ow-cta::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 120%,rgba(123,92,240,.18) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 20%,rgba(0,212,255,.07) 0%,transparent 55%);
+  pointer-events:none;
+}
+.ow-cta::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(123,92,240,.4),rgba(0,212,255,.4),rgba(123,92,240,.4),transparent);
+}
+.ow-cta-inner{position:relative;z-index:1;max-width:520px;margin:0 auto;}
+.ow-cta-inner h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.05em;line-height:.95;color:#fff;margin-bottom:1.1rem;}
+.ow-cta-inner h2 .grad{background:linear-gradient(135deg,var(--sky),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ow-cta-inner p{font-size:.96rem;color:rgba(255,255,255,.4);line-height:1.8;margin-bottom:2.5rem;}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.9rem 2rem;background:linear-gradient(135deg,var(--violet),var(--violet2));
+  color:#fff;border-radius:var(--r);font-family:'Syne',sans-serif;font-size:.86rem;font-weight:700;
+  letter-spacing:.03em;text-decoration:none;box-shadow:0 4px 20px rgba(123,92,240,.35),var(--glow-v);
+  transition:var(--trans);
+}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:var(--glow-v),var(--glow-sky),0 8px 32px rgba(123,92,240,.4);}
+.cta-btn .arr{display:inline-block;transition:transform .3s var(--ease-spring);}
+.cta-btn:hover .arr{transform:translateX(4px);}
+
+/* ── SCROLL REVEAL ───────────────────────────────────────── */
+.sr{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease-out),transform .65s var(--ease-out);}
+.sr.on{opacity:1;transform:translateY(0);}
+.sr[data-d="1"]{transition-delay:.1s;}
+.sr[data-d="2"]{transition-delay:.2s;}
+.sr[data-d="3"]{transition-delay:.3s;}
+.sr[data-d="4"]{transition-delay:.4s;}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media(max-width:1000px){
+  .ow-layout{grid-template-columns:1fr;}
+  .profile-card{position:static;}
+}
+@media(max-width:680px){
+  .skills-grid{grid-template-columns:repeat(2,1fr);}
+  .certs-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:460px){
+  .certs-grid{grid-template-columns:1fr;}
+  .ow-section,.certs-section,.ow-cta{padding-left:1.25rem;padding-right:1.25rem;}
+}
+</style>
+
+<div class="owner-page">
+
+<!-- HERO -->
+<section class="ow-hero">
+  <div class="ow-orb ow-orb-1"></div>
+  <div class="ow-orb ow-orb-2"></div>
+  <div class="ow-orb ow-orb-3"></div>
+  <div class="ow-hero-content">
+    <div class="ow-eyebrow"><div class="ow-eyebrow-dot"></div>The Founder</div>
+    <h1>Behind<br><span class="grad">NEXORA</span></h1>
+    <p>A 16-year-old developer from Egypt with a big vision and the skills to back it up.</p>
+  </div>
+</section>
+
+<!-- MAIN LAYOUT -->
+<section class="ow-section">
+  <div class="ow-inner">
+    <div class="ow-layout">
+
+      <!-- PROFILE CARD -->
+      <div class="profile-card sr">
+        <div class="profile-inner">
+          <div class="owner-av">👨‍💻</div>
+          <div class="profile-name">Yassin</div>
+          <div class="profile-role">Founder &amp; Lead Developer</div>
+          <div class="p-div"></div>
+          <div class="p-det"><span class="p-det-icon">📍</span><span class="p-det-val">Egypt</span></div>
+          <div class="p-det"><span class="p-det-icon">🎂</span><span class="p-det-val">16 years old</span></div>
+          <div class="p-det"><span class="p-det-icon">📚</span><span class="p-det-val">High School Student</span></div>
+          <div class="p-det"><span class="p-det-icon">💻</span><span class="p-det-val">Self-taught Developer</span></div>
+          <div class="p-div"></div>
+          <p class="owner-bio">I started coding out of curiosity and quickly fell in love with turning ideas into real websites. I founded NEXORA to make professional web design accessible to small businesses — without the agency price tag.</p>
+          <div class="vision-quote">"My goal is to build Nexora into a strong digital brand and become one of the most creative tech entrepreneurs in the region."</div>
+        </div>
       </div>
 
-      <div class="owner-right">
-        <div class="block reveal">
+      <!-- RIGHT -->
+      <div class="ow-right">
+
+        <!-- Skills -->
+        <div class="ow-block sr" data-d="1">
           <h3>Technical Skills</h3>
           <div class="skills-grid">
-            <div class="skill-chip"><div class="chip-icon">💻</div><div class="chip-name">HTML</div><div class="chip-desc">Semantic markup</div></div>
+            <div class="skill-chip"><div class="chip-icon">🌐</div><div class="chip-name">HTML</div><div class="chip-desc">Semantic markup</div></div>
             <div class="skill-chip"><div class="chip-icon">🎨</div><div class="chip-name">CSS</div><div class="chip-desc">Layouts &amp; animations</div></div>
             <div class="skill-chip"><div class="chip-icon">⚡</div><div class="chip-name">JavaScript</div><div class="chip-desc">Interactive UI</div></div>
-            <div class="skill-chip"><div class="chip-icon">⚡</div><div class="chip-name">node js</div><div class="chip-desc">Interactive UI</div></div>
-            <div class="skill-chip"><div class="chip-icon">⚡</div><div class="chip-name">mongo db</div><div class="chip-desc">Interactive UI</div></div>
-            <div class="skill-chip"><div class="chip-icon">⚡</div><div class="chip-name">React js</div><div class="chip-desc">Interactive UI</div></div>
+            <div class="skill-chip"><div class="chip-icon">⚛️</div><div class="chip-name">React</div><div class="chip-desc">Component UI</div></div>
+            <div class="skill-chip"><div class="chip-icon">🟢</div><div class="chip-name">Node.js</div><div class="chip-desc">Server-side JS</div></div>
+            <div class="skill-chip"><div class="chip-icon">🍃</div><div class="chip-name">MongoDB</div><div class="chip-desc">NoSQL database</div></div>
             <div class="skill-chip"><div class="chip-icon">🛠</div><div class="chip-name">PHP</div><div class="chip-desc">Backend logic</div></div>
-            <div class="skill-chip"><div class="chip-icon">🗄</div><div class="chip-name">MySQL</div><div class="chip-desc">Databases</div></div>
+            <div class="skill-chip"><div class="chip-icon">🗄</div><div class="chip-name">MySQL</div><div class="chip-desc">Relational DB</div></div>
             <div class="skill-chip"><div class="chip-icon">🔥</div><div class="chip-name">Firebase</div><div class="chip-desc">Cloud services</div></div>
           </div>
         </div>
-        <div class="block reveal">
+
+        <!-- Education -->
+        <div class="ow-block sr" data-d="2">
           <h3>Education</h3>
-          <div class="edu-item"><div class="edu-dot"></div><div><span class="edu-label">High School Student</span><span class="edu-sub">Currently enrolled · Egypt</span></div></div>
-          <div class="edu-item"><div class="edu-dot"></div><div><span class="edu-label">Self-taught Web Development</span><span class="edu-sub">HTML, CSS, JS, PHP, Firebase · 2023–present</span></div></div>
-          <div class="edu-item"><div class="edu-dot"></div><div><span class="edu-label">DECI First Phase Program</span><span class="edu-sub">Digital skills development · 2025</span></div></div>
+          <div class="edu-timeline">
+            <div class="edu-item">
+              <div class="edu-dot-wrap"><div class="edu-dot"></div><div class="edu-line"></div></div>
+              <div><span class="edu-label">High School Student</span><span class="edu-sub">Currently enrolled · Egypt</span></div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-dot-wrap"><div class="edu-dot"></div><div class="edu-line"></div></div>
+              <div><span class="edu-label">Self-taught Web Development</span><span class="edu-sub">HTML, CSS, JS, React, Node, PHP, Firebase · 2023–present</span></div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-dot-wrap"><div class="edu-dot"></div><div class="edu-line"></div></div>
+              <div><span class="edu-label">DECI First Phase Program</span><span class="edu-sub">Digital skills development · 2025</span></div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
 </section>
 
-<!-- CERTIFICATES -->
-<section class="section" style="background:#fff">
-  <div class="inner">
-    <div class="reveal">
-      <span class="tag">Certifications</span>
-      <h2 style="margin-bottom:.75rem">Certificates &amp; Achievements</h2>
-      <p style="max-width:560px;margin-bottom:3rem">Formal recognition from globally recognized institutions.</p>
+<!-- CERTIFICATES (dark section) -->
+<section class="certs-section">
+  <div class="certs-inner">
+    <div class="certs-head sr">
+      <span class="cert-eyebrow">Certifications</span>
+      <h2>Certificates &amp; Achievements</h2>
+      <p>Formal recognition from globally recognized institutions.</p>
     </div>
     <div class="certs-grid">
-      <div class="cert-card reveal"><div class="cert-thumb"><img src="/images/ai.png" alt="AI Overview"/></div><div class="cert-body"><div class="cert-issuer">Huawei Talent</div><h4>Overview of Artificial Intelligence</h4><div class="cert-year">2025</div></div></div>
-      <div class="cert-card reveal"><div class="cert-thumb"><img src="/images/info.png" alt="Data Organization"/></div><div class="cert-body"><div class="cert-issuer">Huawei Talent</div><h4>Information and Data Organization</h4><div class="cert-year">2025</div></div></div>
-      <div class="cert-card reveal"><div class="cert-thumb"><img src="/images/deci.png" alt="DECI"/></div><div class="cert-body"><div class="cert-issuer">DECI</div><h4>First Phase Program — Digital Skills</h4><div class="cert-year">2025</div></div></div>
-      <div class="cert-card reveal"><div class="cert-thumb"><img src="/images/cloude.png" alt="Cloud Computing"/></div><div class="cert-body"><div class="cert-issuer">Huawei Talent</div><h4>Cloud and Basic Computing</h4><div class="cert-year">2025</div></div></div>
-      <div class="cert-card reveal"><div class="cert-thumb"><img src="/images/data manage.png" alt="Data Management"/></div><div class="cert-body"><div class="cert-issuer">Huawei Talent</div><h4>Data Management and Analytics</h4><div class="cert-year">2025</div></div></div>
+      <div class="cert-card sr">
+        <div class="cert-thumb"><img src="/images/ai.png" alt="AI Overview"/></div>
+        <div class="cert-body"><div class="cert-issuer">Huawei Talent</div><h4>Overview of Artificial Intelligence</h4><div class="cert-year">2025</div></div>
+      </div>
+      <div class="cert-card sr" data-d="1">
+        <div class="cert-thumb"><img src="/images/info.png" alt="Data Organization"/></div>
+        <div class="cert-body"><div class="cert-issuer">Huawei Talent</div><h4>Information and Data Organization</h4><div class="cert-year">2025</div></div>
+      </div>
+      <div class="cert-card sr" data-d="2">
+        <div class="cert-thumb"><img src="/images/deci.png" alt="DECI"/></div>
+        <div class="cert-body"><div class="cert-issuer">DECI</div><h4>First Phase Program — Digital Skills</h4><div class="cert-year">2025</div></div>
+      </div>
+      <div class="cert-card sr" data-d="3">
+        <div class="cert-thumb"><img src="/images/cloude.png" alt="Cloud Computing"/></div>
+        <div class="cert-body"><div class="cert-issuer">Huawei Talent</div><h4>Cloud and Basic Computing</h4><div class="cert-year">2025</div></div>
+      </div>
+      <div class="cert-card sr" data-d="4">
+        <div class="cert-thumb"><img src="/images/data manage.png" alt="Data Management"/></div>
+        <div class="cert-body"><div class="cert-issuer">Huawei Talent</div><h4>Data Management and Analytics</h4><div class="cert-year">2025</div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="bottom-cta">
-  <h2>Want to work with me?</h2>
-  <p>I'm passionate about helping businesses grow online. Let's talk about your project.</p>
-  <a href="/contact" class="btn btn-primary">Start a Conversation →</a>
+<!-- BOTTOM CTA -->
+<div class="ow-cta">
+  <div class="ow-cta-inner sr">
+    <h2>Want to work<br><span class="grad">with me?</span></h2>
+    <p>I'm passionate about helping businesses grow online. Let's talk about your project and turn your idea into reality.</p>
+    <a href="/contact" class="cta-btn">Start a Conversation <span class="arr">→</span></a>
+  </div>
 </div>
+
+</div><!-- /.owner-page -->
+
+<script>
+(function(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold:.1, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.sr').forEach(el => io.observe(el));
+})();
+</script>
 
 <%- include('../partials/footer') %>
